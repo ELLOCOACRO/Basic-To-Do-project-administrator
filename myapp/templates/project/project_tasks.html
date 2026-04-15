@@ -1,0 +1,134 @@
+{% extends 'layouts/base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+
+  
+  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    {% for name, url in breadcrumb %}
+    
+      {% if url %}
+      <li class="breadcrumb-item">
+        <a href="{{url}}">
+          {{name}}
+        </a>
+      </li>
+      {% else %}
+    
+      <li class="breadcrumb-item active current-breadcrumb" aria-current="page">
+
+          {{name}}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+
+
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Show a second modal and hide this one with the button below.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Hide this modal and show the first with the button below.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button>
+  
+
+
+{% for task in tasks_pendience %}
+
+
+ <article class="col-12 card mb-3">
+
+  <h2 class="card-header text-warning">
+    {{task.title}}
+  </h2>
+
+
+  <div class="card-body">
+      
+
+      <form method="POST" class="d-flex justify-content-end">
+        {% csrf_token %}
+
+        
+          <button class = "btn btn-success" name = "PUT" value={{task.id}}>Done</button>
+
+          <button  class="btn btn-danger bi bi-trsh" name = "DELETE" value= {{task.id}}>
+            <img src="{% static 'icons/trash.svg' %}">
+          </button>
+      </form>
+      
+ </article>
+
+
+  
+{% endfor %}
+</div>
+
+
+
+
+
+<div class="container">
+
+
+ {% for task in tasks_done %}
+  <article class="col-12 card mb-3">
+
+  <h2 class="card-header text-success">
+    {{task.title}}
+  </h2>
+
+
+  <div class="card-body">
+      
+
+      <form method="POST" class="d-flex justify-content-end">
+        {% csrf_token %}
+
+          <button  class="btn btn-danger bi bi-trsh" name = "DELETE" value= {{task.id}}>
+            <img src="{% static 'icons/trash.svg' %}">
+          </button>
+      </form>
+      
+ </article>
+
+ {% endfor %}
+
+
+</div>
+
+{% endblock %}

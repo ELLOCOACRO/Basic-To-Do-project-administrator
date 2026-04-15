@@ -1,0 +1,63 @@
+{% extends 'layouts/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+
+
+<div class="container">
+
+
+  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    {% for name, url in breadcrumb %}
+    
+      {% if url %}
+      <li class="breadcrumb-item">
+        <a href="{{url}}">
+          {{name}}
+        </a>
+      </li>
+      {% else %}
+    
+      <li class="breadcrumb-item active current-breadcrumb" aria-current="page">
+
+          {{name}}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+
+
+
+
+    <h1 class="text-center display-3 text-info">Create New project</h1>
+    <form method="POST" class="d-flex justify-content-center">
+        {% csrf_token %}
+      <div class="mb-3 col-12 col-md-8">
+
+        {% csrf_token %}
+        {{ projectForm.name.label_tag}}
+        {{ projectForm.name|add_class:"form-control" }}
+
+    
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+</div>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+{% endblock %}

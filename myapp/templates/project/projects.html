@@ -1,0 +1,72 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+
+
+
+ 
+
+
+ <div class="container">
+
+
+
+  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    {% for name, url in breadcrumb %}
+    
+      {% if url %}
+      <li class="breadcrumb-item">
+        <a href="{{url}}">
+          {{name}}
+        </a>
+      </li>
+      {% else %}
+    
+      <li class="breadcrumb-item active current-breadcrumb" aria-current="page">
+
+          {{name}}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+
+
+
+
+
+
+  <h1 class= "fw-bold display-3 text-center title">Projects</h1>
+  
+{% for project in projects %}
+  
+  
+  <div class="card mb-1">
+
+    <h2 class="card-header text-info">
+      <a href="/projects/{{project.id}}">{{project.name}}</a>
+    </h2>
+
+    <div class="card-body">
+
+
+      <form method="POST" class="d-flex justify-content-end">
+        {% csrf_token %}
+          <button  class="btn btn-danger" name = "DELETE" value= {{project.id}} >Delete</button>
+      </form>
+      
+
+    </div>
+  </div>
+
+{% endfor %} 
+  
+
+</div>
+
+
+{% endblock %}
+
+
