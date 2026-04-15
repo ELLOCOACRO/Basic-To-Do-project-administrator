@@ -11,5 +11,5 @@ class CreateNewTask(forms.Form):
 
 class CreateNewProject(forms.Form):
     name = forms.CharField(label='Project Name', max_length=200)
-
+    description = forms.CharField(widget=forms.Textarea, label="description", required=False)
     

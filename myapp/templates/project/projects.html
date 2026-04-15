@@ -36,30 +36,56 @@
 
 
 
-
-
   <h1 class= "fw-bold display-3 text-center title">Projects</h1>
-  
+
 {% for project in projects %}
+
   
-  
-  <div class="card mb-1">
 
-    <h2 class="card-header text-info">
-      <a href="/projects/{{project.id}}">{{project.name}}</a>
-    </h2>
+  <div class="card shadow-sm mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{project.name}}</h5>
+    <p class="card-text text-muted">{{project.description}}</p>
 
-    <div class="card-body">
+   <div class="progress mb-2">
+    <div 
+     class="progress-bar 
+    {% if project.progress < 30 %}
+        bg-danger 
 
+      {% elif project.progress < 70 %} 
+         bg-warning 
 
-      <form method="POST" class="d-flex justify-content-end">
+      {% else %}
+        bg-success 
+        {% endif %}" 
+
+       style="width: {{ project.progress }}%;">
+        {{ project.progress }}%
+    </div>
+   </div>
+
+    <span class="badge bg-warning">In progress</span>
+
+    <div class="mt-3 d-flex justify-content-between">
+      <a class="btn btn-sm btn-outline-primary" href="/projects/{{project.id}}">Ver</a>
+
+       <form method="POST" class="d-flex justify-content-end">
         {% csrf_token %}
-          <button  class="btn btn-danger" name = "DELETE" value= {{project.id}} >Delete</button>
+        <button class="btn btn-sm btn-outline-danger" name = "DELETE" value= {{project.id}} >Eliminar</button>
       </form>
-      
-
     </div>
   </div>
+</div>
+
+
+
+
+
+
+  
+
+
 
 {% endfor %} 
   

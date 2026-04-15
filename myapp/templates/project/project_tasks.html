@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 
-
 {% load static %}
+{% load widget_tweaks %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
 <div class="container">
 
   
-  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id = "modalForm">
     <ol class="breadcrumb">
     {% for name, url in breadcrumb %}
     
@@ -31,40 +31,75 @@
   </nav>
 
 
-  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Show a second modal and hide this one with the button below.
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Hide this modal and show the first with the button below.
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
-      </div>
-    </div>
-  </div>
-</div>
-<button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button>
+
+
+
+
+
   
+
+      
+
+<div class="modal fade" id="staticBackdrop" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title text-primary">Create Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+      <form method = "POST">
+        <div class="modal-body">
+          
+
+        {% csrf_token %}
+        {{ TaskForm.title.label_tag}}
+        {{ TaskForm.title|add_class:"form-control" }}
+
+          
+
+        {{TaskForm.description.label_tag}}
+ 
+        {{ TaskForm.description|add_class:"form-control" }}
+
+
+      
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+      
+
+<div class="row d-flex align-items-center">
+  <div class="col-auto">
+    <h1 class="display-3">{{project.name}}</h1>
+
+  </div>
+
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add task
+  </button>
+  </div>
+
+  
+  
+
+
+
+
+  
+</div>
+<!-- Button trigger modal -->
 
 
 {% for task in tasks_pendience %}

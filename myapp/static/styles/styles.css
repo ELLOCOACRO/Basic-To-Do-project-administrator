@@ -1,5 +1,4 @@
 body {
-    background: #2B303A;
     color:whitesmoke;
 
 }
@@ -7,21 +6,10 @@ body {
     color: #92DCE5 !important;
 }
 
-.navegation a {
-    color: #EEE5E9 !important
-}
 
-.navegation {
-    background:#7C7C7C !important;
-}
 
-.card .card-body {
-    background: #f7f3f5!important;
-}
 
-.card .card-header {
-    background: #EFE7EB!important;
-}
+
 
 
 h1 {

@@ -4,6 +4,18 @@ from django.db import models
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def progress(self):
+        total = self.task_set.all().count()
+        done_tasks = self.task_set.filter(done = True).count()
+        
+        if total and done_tasks:
+                progress = (done_tasks / total) * 100
+        
+        else:
+            progress = 0
+        return int(progress)
 
     
     

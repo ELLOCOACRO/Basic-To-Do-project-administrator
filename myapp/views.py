@@ -30,8 +30,13 @@ def projects(request):
                   ("projects", None),
                   ]
     
+    projects = Project.objects.all()
+        
+        
+    
+   
     if request.method == "GET":
-        projects = Project.objects.values()
+        
         return render(request, 'project/projects.html', {
             'projects' : projects,
             'breadcrumb': breadcrumb,
@@ -80,57 +85,43 @@ def project_tasks(request, id):
     
     
     if request.method == "GET":
+        TaskForm = CreateNewTask()
         return render(request, 'project/project_tasks.html', {
             'project' : project,
             'tasks' : tasks,
             'tasks_done' : tasks_done,
             'tasks_pendience' : tasks_pendience,
             'breadcrumb' : breadcrumb,
+            'TaskForm': TaskForm,
         })
     
-    elif request.POST.get('DELETE'):
+    else: 
+        
+        
+      if request.POST.get('DELETE'):
         id = int(request.POST['DELETE'])
         task = get_object_or_404(Task, id = id)
         task.delete()
                 
-    elif request.POST.get('PUT'):
+      elif request.POST.get('PUT'):
         id = int(request.POST['PUT'])
         task = get_object_or_404(Task, id = id)
         task.done = not task.done
         task.save()
+        
+      else:
+          
+          tTitle = request.POST.get('title')
+          tDescription = request.POST.get('description')
+          
+          Task.objects.create(title = tTitle, description = tDescription, project = project)
             
-            
-    return redirect('project_tasks', project.id)
+      return redirect('project_tasks', project.id)
             
             
   
    
 
-
-def addTask(request, id):
-    
-    form = CreateNewTask()
-    project = get_object_or_404(Project, id = id)
-    breadcrumb = [("home", "/"),
-                   ("projects", "/projects/"),
-                   (project.name, f'/projects/{project.id}'),
-                   ('AddTask', None),
-                   ]
-    
-    if request.method == "POST":
-        
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        project.task_set.create(title = title, description = description)
-        
-        
-    
-    return render(request, 'task/add.html', {
-            'form': form,
-            'project' : project,
-            'breadcrumb' : breadcrumb,
-            
-        })
 
 #############################
 ###PROJECT VIEWS ENDS HERE###
@@ -138,12 +129,6 @@ def addTask(request, id):
 
 
 
-def task(request):
-    tasks = Task.objects.all()
-
-    return render(request, 'task/tasks.html', {
-        'tasks' : tasks
-    })
 
 
 
