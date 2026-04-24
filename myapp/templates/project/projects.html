@@ -1,16 +1,14 @@
 
 {% extends 'layouts/base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
 
 
 
- 
-
-
+<!--Breadcrumbs-->
  <div class="container">
-
-
 
   <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -35,19 +33,74 @@
 
 
 
+<!--The modal of create project-->
+<div class="modal fade" id="staticBackdrop" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-  <h1 class= "fw-bold display-3 text-center title">Projects</h1>
+        <div class="modal-header">
+          <h5 class="modal-title text-primary">Create Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+      <form method = "POST">
+        {% csrf_token %}
+        <div class="modal-body">
+          
+
+        {{ projectForm.name.label_tag}}
+        {{ projectForm.name|add_class:"form-control" }}
+        {{ projectForm.description.label_tag}}
+        {{ projectForm.description|add_class:"form-control" }}
+
+      
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+
+
+
+      </form>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<header class=" d-flex align-items-center">
+
+    <!--Modal trigger button-->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  New project
+  </button>
+
+  <div class="mx-auto">
+    <h1 class= "fw-bold display-3 text-center">Projects</h1>
+  </div>
+  
+  
+  
+
+
+</header>  
 
 {% for project in projects %}
 
   
-
+<!--Projects cards-->
   <div class="card shadow-sm mb-3">
   <div class="card-body">
     <h5 class="card-title">{{project.name}}</h5>
     <p class="card-text text-muted">{{project.description}}</p>
 
    <div class="progress mb-2">
+
     <div 
      class="progress-bar 
     {% if project.progress < 30 %}
@@ -60,8 +113,9 @@
         bg-success 
         {% endif %}" 
 
-       style="width: {{ project.progress }}%;">
+       style="width: {% if project.progress == 0 %} 1% {% else %}{{ project.progress }}%{% endif %};">
         {{ project.progress }}%
+
     </div>
    </div>
 

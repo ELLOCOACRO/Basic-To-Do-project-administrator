@@ -8,7 +8,7 @@
 
 <div class="container">
 
-  
+  <!--Breadcrumbs-->
   <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" id = "modalForm">
     <ol class="breadcrumb">
     {% for name, url in breadcrumb %}
@@ -39,7 +39,7 @@
   
 
       
-
+<! -- Modal --!>
 <div class="modal fade" id="staticBackdrop" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -86,6 +86,8 @@
   </div>
 
   <div class="col-auto">
+
+    <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Add task
   </button>
@@ -99,20 +101,19 @@
 
   
 </div>
-<!-- Button trigger modal -->
 
 
-{% for task in tasks_pendience %}
+<!--Tasks-->
+{% for task in uncompleted_tasks %}
 
+ <article class="col-12 card mb-3  border-start-success">
 
- <article class="col-12 card mb-3">
-
-  <h2 class="card-header text-warning">
+  <h2 class="card-header text-warning ">
     {{task.title}}
   </h2>
 
 
-  <div class="card-body">
+  <div class="card-body ">
       
 
       <form method="POST" class="d-flex justify-content-end">
@@ -128,20 +129,10 @@
       
  </article>
 
+ {% endfor %}
+{% for task in completed_tasks %}
 
-  
-{% endfor %}
-</div>
-
-
-
-
-
-<div class="container">
-
-
- {% for task in tasks_done %}
-  <article class="col-12 card mb-3">
+ <article class="col-12 card mb-3">
 
   <h2 class="card-header text-success">
     {{task.title}}
@@ -154,6 +145,7 @@
       <form method="POST" class="d-flex justify-content-end">
         {% csrf_token %}
 
+
           <button  class="btn btn-danger bi bi-trsh" name = "DELETE" value= {{task.id}}>
             <img src="{% static 'icons/trash.svg' %}">
           </button>
@@ -161,7 +153,14 @@
       
  </article>
 
- {% endfor %}
+
+
+{% endfor %}
+
+
+
+
+
 
 
 </div>
